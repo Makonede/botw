@@ -25,7 +25,11 @@ public:
 
     sead::Heap* getEventHeap() const { return mEventHeap; }
 
-    bool callEvent(const Metadata& metadata, act::Actor* actor = nullptr, void* x = nullptr);
+    bool doCallEvent(const Metadata& metadata, int* x = nullptr);
+    inline auto callEvent(const Metadata& metadata) {
+        int x = 0x1ff;
+        return doCallEvent(metadata, &x);
+    }
 
 private:
     u8 pad_20[0x1d178 - 0x20];
