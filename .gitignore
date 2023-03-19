@@ -1,3 +1,6 @@
+*.d
+*.o
+
 # Python
 __pycache__/
 *.pyc
