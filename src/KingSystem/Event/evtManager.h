@@ -1,6 +1,7 @@
 #pragma once
 
 #include <heap/seadDisposer.h>
+#include <math/seadMatrix.hpp>
 
 namespace ksys::act {
 class Actor;
@@ -16,6 +17,17 @@ class Manager {
     SEAD_SINGLETON_DISPOSER(Manager)
     Manager();
     virtual ~Manager();
+
+    struct alignas(16) CallArg {
+        sead::Matrix34<float> pos;
+        bool field_30;
+        bool isPauseOtherActors;
+        bool field_32;
+        bool field_33;
+        Metadata *metadata;
+        unsigned long long field_40;
+        act::Actor *actor;
+    };
 
 public:
     void init(sead::Heap* heap);
