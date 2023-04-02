@@ -18,15 +18,15 @@ class Manager {
     Manager();
     virtual ~Manager();
 
-    struct alignas(16) CallArg {
+    struct alignas(0x10) CallArg {
         sead::Matrix34<float> pos;
         bool field_30;
         bool isPauseOtherActors;
         bool field_32;
         bool field_33;
-        Metadata *metadata;
+        Metadata* metadata;
         unsigned long long field_40;
-        act::Actor *actor;
+        act::Actor* actor;
     };
 
 public:
@@ -37,10 +37,14 @@ public:
 
     sead::Heap* getEventHeap() const { return mEventHeap; }
 
-    bool doCallEvent(const Metadata& metadata, int* x = nullptr);
+    bool doCallEvent(const CallArg& event, int* x = nullptr);
     inline auto callEvent(const Metadata& metadata) {
+        CallArg event{};
         int x = 0x1ff;
-        return doCallEvent(metadata, &x);
+
+        event.isPauseOtherActors = true;
+        event.metadata = const_cast<Metadata*>(&metadata);
+        return doCallEvent(event, &x);
     }
 
 private:
