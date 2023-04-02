@@ -37,14 +37,23 @@ public:
 
     sead::Heap* getEventHeap() const { return mEventHeap; }
 
-    bool doCallEvent(const CallArg& event, int* x = nullptr);
+    bool doCallEvent(CallArg* event, int* x = nullptr);
     inline auto callEvent(const Metadata& metadata) {
         CallArg event{};
         int x = 0x1ff;
 
         event.isPauseOtherActors = true;
         event.metadata = const_cast<Metadata*>(&metadata);
-        return doCallEvent(event, &x);
+
+        if (doCallEvent(&event, &x)) {
+            if (x != 500) {
+                reinterpret_cast<unsigned int*>(this)[0x74bd] |= 0x100u;
+            }
+
+            return true;
+        }
+
+        return false;
     }
 
 private:
