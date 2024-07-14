@@ -33,8 +33,8 @@ constexpr float durationToFloat(int h, int m) {
     return timeToFloat(h, m);
 }
 
-constexpr float operator""_days(unsigned long long hours) {
-    return timeToFloat(static_cast<int>(24 * hours), 0);
+constexpr float operator""_days(unsigned long long days) {
+    return timeToFloat(static_cast<int>(24 * days), 0);
 }
 
 constexpr float operator""_h(unsigned long long hours) {
